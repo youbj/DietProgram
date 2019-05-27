@@ -1,0 +1,925 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#define MAX_LENGTH 100000
+#define COMMAND_SIZE 256
+
+void gotoxy(int x, int y);
+void FeMaleBMI();
+void MaleBMI();
+float CalcBMI(float h, float w);
+void CursorView(char show);
+void TitleBar(const char* ap_string, int a);
+void Drawtable();
+void PrintBMI(float BMI);
+void CheckBMI(float bmi);
+void PrintDataHigh();
+void PrintDatamiddle();
+void PrintDataLow();
+void Printmenu();
+void printDietM();
+void printDietS();
+void PrintDietH();
+void PrintDietL();
+void partial_exer_menu();
+void Print_partial_exer();
+void Print_exer_High();
+
+
+void PrintMiddleline(const char *ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+void PrintMiddleline1(const char *ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+void Printtable1(const char* ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+int main()
+{
+	system("COLOR F0");
+	char gender;
+	char command[COMMAND_SIZE] = { '\0', };
+	int lines = 40;
+	int cols = 120;
+	sprintf(command, "mode con: lines=%d cols=%d", lines, cols);
+	system(command);
+
+	TitleBar("             사용자의 성별을 입력해주세요[F/M] : ", 60);
+	gotoxy(76, 15);
+	scanf("%c", &gender);
+	CursorView(0);
+	if (gender == 'F')
+	{
+		system("cls");
+		FeMaleBMI();
+	}
+	else if (gender == 'M')
+	{
+		system("cls");
+		MaleBMI();
+	}
+	else {
+		TitleBar("          잘못된 입력입니다. 프로그램을 종료합니다.", 60);
+		system("cls");
+		exit(0);
+	}
+}
+
+void FeMaleBMI()
+{
+	float h = 0, w = 0;
+	TitleBar("                '여성'을 선택하셨습니다.", 60);
+	Sleep(500);
+	system("cls");
+	Drawtable();
+	gotoxy(70, 14);
+	scanf("%f", &h);
+	gotoxy(70, 16);
+	scanf("%f", &w);
+	CursorView(0);
+	CalcBMI(h, w);
+	Sleep(1000);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다.**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다..**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다...**", 60);
+	Sleep(500);
+	system("cls");
+	PrintBMI(CalcBMI(h, w));
+}
+
+void MaleBMI()//표로 나타낼 예정
+{
+	float h = 0, w = 0;
+	TitleBar("                '남성'을 선택하셨습니다.", 60);
+	Sleep(500);
+	system("cls");
+	Drawtable();
+	gotoxy(70, 14);
+	scanf("%f", &h);
+	gotoxy(70, 16);
+	scanf("%f", &w);
+	CursorView(0);
+	CalcBMI(h, w);
+	Sleep(1000);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다.**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다..**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다...**", 60);
+	Sleep(500);
+	system("cls");
+	PrintBMI(CalcBMI(h, w));
+}
+
+float CalcBMI(float h, float w)
+{
+	float bmi;
+	float h1;
+	h1 = h / 100;
+	bmi = w / (h1 * h1);
+	return bmi;
+}
+
+void CursorView(char show)//커서숨기기
+{
+	HANDLE hConsole;
+	CONSOLE_CURSOR_INFO ConsoleCursor;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	ConsoleCursor.bVisible = show;
+	ConsoleCursor.dwSize = 1;
+
+	SetConsoleCursorInfo(hConsole, &ConsoleCursor);
+}
+
+void gotoxy(int x, int y)
+{
+	COORD Pos = { x - 1, y - 1 };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+void TitleBar(const char* ap_string, int a) {
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < a; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 5; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1(ap_string, 60);
+	for (i = 0; i < 15; i++) PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+}
+
+void Drawtable()
+{
+	int i;
+
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 2; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("               ** 정보를 입력하여 주세요! **", 60);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┬"); }
+	}printf("┤\n");
+	Printtable1("     키를 입력해주세요(cm) :  │  ", 61);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┼"); }
+	}printf("┤\n");
+	Printtable1("     몸무게를 입력해주세요  : │  ", 61);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┴"); }
+	}printf("┤\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+}
+
+void PrintBMI(float BMI)
+{
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	printf("\t\t\t│\t\t 당신의 BMI는 %.2f입니다!\t\t     │\n", BMI);
+	printf("\t\t\t│%-*s│\n", 60, "             당신의 비만도를 계산하고 있습니다...");
+	printf("\t\t\t├");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┤\n");
+	PrintMiddleline("", 60);
+	Sleep(1500);
+	CheckBMI(BMI);
+
+}
+
+void CheckBMI(float bmi)
+{
+	if (bmi > 18.5) {
+		if (bmi > 22.9) {
+			if (bmi > 24.9) {
+				PrintMiddleline1("             당신은 비만입니다..", 60);
+				PrintMiddleline("", 60);
+				printf("\t\t\t└");
+				for (int i = 0; i < 60; i++) printf("─");
+				printf("┘");
+				Sleep(3000);
+				system("cls");
+				PrintDataHigh();
+				
+			}
+			else {
+				PrintMiddleline1("             당신은 과체중입니다.", 60);
+				PrintMiddleline("", 60);
+				printf("\t\t\t└");
+				for (int i = 0; i < 60; i++) printf("─");
+				printf("┘");
+				Sleep(3000);
+				system("cls");
+				PrintDataHigh();
+			}
+		}
+		else {
+			PrintMiddleline1("             당신은 정상체중입니다!", 60);
+			PrintMiddleline("", 60);
+			printf("\t\t\t└");
+			for (int i = 0; i < 60; i++) printf("─");
+			printf("┘");
+			Sleep(3000);
+			system("cls");
+
+			PrintDatamiddle();
+		}
+	}
+	else {
+		PrintMiddleline1("             당신은 저체중입니다.", 60);
+		PrintMiddleline("", 60);
+		printf("\t\t\t└");
+		for (int i = 0; i < 60; i++) printf("─");
+		printf("┘");
+		Sleep(3000);
+		system("cls");
+		PrintDataLow();
+
+	}
+}
+
+void PrintDataHigh()
+{
+	int menu;
+	int mm;
+	Printmenu();
+	scanf("%d", &menu);
+	switch (menu)
+	{
+	case 1:
+		Print_partial_exer();//부분별 운동
+		break;
+	case 2:
+		partial_exer_menu();// 과체중이상을위한 다이어트 운동 
+		break;
+	case 3:
+	{
+		system("cls");
+		int i;
+		printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+		for (i = 0; i < 60; i++) printf("─");
+		printf("┐\n");
+		printf("\n\t\t\t  1. 다이어트 정보 출력\n");
+		printf("\t\t\t  2. 다이어트 식단 출력\n");
+		printf("\t\t\t  원하시는 메뉴를 선택하세요: \n\n");
+		printf("\t\t\t└");
+		for (i = 0; i < 60; i++) printf("─");
+		printf("┘");
+		scanf("%d", &mm);
+		if (mm == 1)
+		{
+			printDietM();//다이어트 정보를 출력하는 함수
+			system("cls");
+		}
+		else if (mm == 2)
+		{
+			PrintDietH();// 식단을 만드는 함수
+			system("cls");
+		}
+		else
+		{
+			printf("잘못입력하셨습니다.");
+			exit(1);
+		}
+
+	}
+	}
+}
+
+void PrintDatamiddle()
+{
+	int menu;
+	Printmenu();
+	scanf("%d", &menu);
+	switch (menu)
+	{
+	case 1:
+		Print_partial_exer();//부분별 운동
+		break;
+	case 2:
+		partial_exer_menu();// 정상체중을위한 다이어트 운동 
+		break;
+	case 3:
+		printDietS();// 정상체중 식단
+		break;
+	}
+}
+
+void PrintDataLow()
+{
+	int menu;
+	Printmenu();
+	scanf("%d", &menu);
+	switch (menu)
+	{
+	case 1:
+		//PrintPartialexer();
+		break;
+	case 2:
+		//PrintbodyexerLow();// 저체중을 위하여 근육생성운동
+		break;
+	case 3:
+		PrintDietL();// 살찌는 식단
+		break;
+	}
+}
+
+void Printmenu()
+{ // 번호를 입력받는 것이아닌 커서를 이용하여
+	int menu, i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	PrintMiddleline("                     **할수있다! 다이어트!**", 60);
+	PrintMiddleline("", 60);
+	PrintMiddleline("               1.부위별 운동보기", 60);
+	PrintMiddleline("                2.전신 운동보기", 60);
+	PrintMiddleline1("                3.다이어트 식단 만들기", 60);
+	PrintMiddleline("               원하는 메뉴를 선택해주세요 : ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(70, 18);
+}
+
+void PrintDietL() { //살찌는 식단
+	char buffer[MAX_LENGTH];
+	FILE *p_file = NULL;
+	int i;
+	i = rand() % 5 + 1;
+	switch (i) {
+
+	case 1: {
+		fopen("저체중식단1.txt", "rt");
+		if (0 == fopen_s(&p_file, "저체중식단1.txt", "rt"))
+		{
+			printf("\n----------저체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 2: {
+		fopen("저체중식단2", "rt");
+		if (0 == fopen_s(&p_file, "저체중식단2.txt", "rt"))
+		{
+			printf("\n----------저체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 3: {
+		fopen("저체중식단3", "rt");
+		if (0 == fopen_s(&p_file, "저체중식단3.txt", "rt"))
+		{
+			printf("\n----------저체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+
+	case 4: {
+		fopen("저체중식단4", "rt");
+		if (0 == fopen_s(&p_file, "저체중식단4.txt", "rt"))
+		{
+			printf("\n----------저체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 5: {
+		fopen("저체중식단5", "rt");
+		if (0 == fopen_s(&p_file, "저체중식단5.txt", "rt"))
+		{
+			printf("\n----------저체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	}
+}
+void PrintDietH() { //살빼는 식단
+	char buffer[MAX_LENGTH];
+	FILE *p_file = NULL;
+
+	int i;
+	i = rand() % 5 + 1;
+	switch (i) {
+	case 1: {
+		fopen("과체중식단1.txt", "rt");
+		if (0 == fopen_s(&p_file, "과체중식단1.txt", "rt"))
+		{
+			printf("\n----------과체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 2: {
+		fopen("과체중식단2.txt", "rt");
+		if (0 == fopen_s(&p_file, "과체중식단2.txt", "rt"))
+		{
+			printf("\n----------과체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 3: {
+		fopen("과체중식단3.txt", "rt");
+		if (0 == fopen_s(&p_file, "과체중식단3.txt", "rt"))
+		{
+			printf("\n----------과체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 4: {
+		fopen("과체중식단4.txt", "rt");
+		if (0 == fopen_s(&p_file, "과체중식단4.txt", "rt"))
+		{
+			printf("\n----------과체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 5: {
+		fopen("과체중식단5.txt", "rt");
+		if (0 == fopen_s(&p_file, "과체중식단5.txt", "rt"))
+		{
+			printf("\n----------과체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+
+
+	}
+}
+void printDietS() { //정상체중 식단
+	char buffer[MAX_LENGTH];
+	FILE *p_file = NULL;
+
+	int i;
+	i = rand() % 5 + 1;
+	switch (i) {
+	case 1: {
+		fopen("정상체중식단1.txt", "rt");
+		if (0 == fopen_s(&p_file, "정상체중식단1.txt", "rt"))
+		{
+			printf("\n----------정상체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 2: {
+		fopen("정상체중식단2.txt", "rt");
+		if (0 == fopen_s(&p_file, "정상체중식단2.txt", "rt"))
+		{
+			printf("\n----------정상체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 3: {
+		fopen("정상체중식단3.txt", "rt");
+		if (0 == fopen_s(&p_file, "정상체중식단3.txt", "rt"))
+		{
+			printf("\n----------정상체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 4: {
+		fopen("정상체중식단4.txt", "rt");
+		if (0 == fopen_s(&p_file, "정상체중식단4.txt", "rt"))
+		{
+			printf("\n----------정상체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+	case 5: {
+		fopen("정상체중식단5.txt", "rt");
+		if (0 == fopen_s(&p_file, "정상체중식단5.txt", "rt"))
+		{
+			printf("\n----------정상체중 식단----------\n\n");
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+			break;
+		}
+		printf("\n\n");
+	}
+
+	}
+}
+void printDietM() { //다이어트 종류 정보출력
+	char buffer[MAX_LENGTH];
+	system("cls");
+	FILE *p_file = NULL;
+	int dm;
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	printf("\t\t\t  궁금한 다이어트 정보를 선택하세요.\n");
+	printf("\t\t\t  1. 디톡스 다이어트\n");
+	printf("\t\t\t  2. 원푸드 다이어트\n");
+	printf("\t\t\t  3. 덴마크 다이어트\n");
+	printf("\t\t\t  4. 간헐적 단식\n");
+	printf("\t\t\t  5. 황제 다이어트\n");
+	printf("\t\t\t  6. 저인슐린 다이어트\n");
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	scanf("%d", &dm);
+	system("cls");
+	switch (dm)
+	{
+	case 1:
+		fopen("디톡스.txt", "rt");
+		if (0 == fopen_s(&p_file, "디톡스.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	case 2:
+		fopen("원푸드.txt", "rt");
+		if (0 == fopen_s(&p_file, "원푸드.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	case 3:
+		fopen("덴마크.txt", "rt");
+		if (0 == fopen_s(&p_file, "덴마크.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	case 4:
+		fopen("간헐적단식.txt", "rt");
+		if (0 == fopen_s(&p_file, "간헐적단식.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	case 5:
+		fopen("황제.txt", "rt");
+		if (0 == fopen_s(&p_file, "황제.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	case 6:
+
+		fopen("저인슐린.txt", "rt");
+		if (0 == fopen_s(&p_file, "저인슐린.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(10000);
+		}
+		printf("\n\n");
+		break;
+	}
+}
+
+void Print_partial_exer()
+{
+	int menu;
+	char buffer[99999];      //동적할당으로 변경해야함
+	FILE *p_file = NULL;
+	while (1)
+	{
+		partial_exer_menu();
+
+		scanf("%d", &menu);
+		switch (menu)
+		{
+		case 0:
+		{
+			system("cls");
+			fopen("전체운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "전체운동.txt", "rt"))
+			{
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 1:
+		{
+			system("cls");
+			fopen("어깨운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "어깨운동.txt", "rt"))
+			{
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			fopen("가슴운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "가슴운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			fopen("등운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "등운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 4:
+		{
+			system("cls");
+			fopen("복근운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "복근운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 5:
+		{
+			system("cls");
+			fopen("엉덩이운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "엉덩이운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 6:
+		{
+			system("cls");
+			fopen("허벅지운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "허벅지운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 7:
+		{
+			system("cls");
+			fopen("종아리운동.txt", "rt");
+			if (0 == fopen_s(&p_file, "종아리운동.txt", "rt"))
+			{
+			
+				while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경해야함
+				{
+					printf("%s", buffer);
+				}
+				fclose(p_file);
+				Sleep(10000);
+			}
+			break;
+		}
+		case 10:
+			exit(0);
+		}
+	}
+}
+void partial_exer_menu()
+{
+	int i;
+	system("cls");
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	PrintMiddleline("", 60);
+	PrintMiddleline("       '먹고싶은걸 다먹지만 아주조금만 먹었어요' -설현- ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t├");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┤\n");
+	PrintMiddleline("               0. 전체", 60);
+	PrintMiddleline("               1. 어깨 운동", 60);
+	PrintMiddleline("               2. 가슴 운동", 60);
+	PrintMiddleline("               3. 등 운동", 60);
+	PrintMiddleline("               4. 복근 운동", 60);
+	PrintMiddleline("               5. 엉덩이 운동", 60);
+	PrintMiddleline("               6. 허벅지 운동", 60);
+	PrintMiddleline("               7. 종아리 운동", 60);
+	PrintMiddleline("               10. 종료", 60);
+	PrintMiddleline("               원하는 메뉴를 선택해주세요 : ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(70, 23);
+}
+
+void Print_exer_High()
+{
+	system("cls");
+	char buffer[99999];      //동적할당으로 변경 예정
+	FILE *p_file = NULL;
+	fopen("유산소운동.txt", "rt");
+	if (fopen_s(&p_file, "유산소운동.txt", "rt") == 0)
+	{
+		printf("과체중을 위한 추천 운동\n");
+		while (fgets(buffer, 99999, p_file) != NULL)      //동적할당으로 변경 예정
+		{
+			printf("%s", buffer);
+		}
+		fclose(p_file);
+		Sleep(5000);
+	}
+}
