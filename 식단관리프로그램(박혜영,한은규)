@@ -1,0 +1,326 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#define MAX_LENGTH 100000
+
+void CursorView(char show);
+void Print_L(int menu);
+void Print_H(int menu);
+void Print_S(int menu);
+void Print_M(int menu);
+int PrintDietM();
+void PrintDietS();
+void PrintDietH();
+void PrintDietL();
+
+void Print_L(int menu)//저체중 식단 이미지 출력
+{
+	int num = 0;
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	if (menu == 1)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("저체중식단1.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 2)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("저체중식단2.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 3)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("저체중식단3.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 4)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("저체중식단4.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 5)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("저체중식단5.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+	Sleep(3000);
+}
+
+void Print_H(int menu)//과체중 식단 이미지 출력
+{
+	int num = 0;
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	if (menu == 1)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("과체중식단1.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 2)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("과체중식단2.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 3)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("과체중식단3.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 4)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("과체중식단4.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 5)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("과체중식단5.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+	Sleep(3000);
+}
+
+void Print_S(int menu)//정상체중 식단 이미지 출력
+{
+	int num = 0;
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	if (menu == 1)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("정상체중식단1.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 2)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("정상체중식단2.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 3)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("정상체중식단3.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 4)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("정상체중식단4.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	else if (menu == 5)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("정상체중식단5.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+		system("cls");
+	}
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+	Sleep(3000);
+}
+
+void Print_M(int menu)
+{
+	char buffer[MAX_LENGTH];
+	system("cls");
+	FILE* p_file = NULL;
+	switch (menu)
+	{
+	case 1:
+		fopen("디톡스.txt", "rt");
+		if (0 == fopen_s(&p_file, "디톡스.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	case 2:
+		fopen("원푸드.txt", "rt");
+		if (0 == fopen_s(&p_file, "원푸드.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	case 3:
+		fopen("덴마크.txt", "rt");
+		if (0 == fopen_s(&p_file, "덴마크.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	case 4:
+		fopen("간헐적단식.txt", "rt");
+		if (0 == fopen_s(&p_file, "간헐적단식.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	case 5:
+		fopen("황제.txt", "rt");
+		if (0 == fopen_s(&p_file, "황제.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	case 6:
+
+		fopen("저인슐린.txt", "rt");
+		if (0 == fopen_s(&p_file, "저인슐린.txt", "rt"))
+		{
+			while (fgets(buffer, MAX_LENGTH, p_file) != NULL)
+			{
+				printf("%s", buffer);
+			}
+			fclose(p_file);
+			Sleep(9000);
+			system("cls");
+		}
+		printf("\n\n");
+		break;
+	}
+}
+
+void PrintDietL()
+{ //살찌는 식단
+	char buffer[MAX_LENGTH];
+	FILE* p_file = NULL;
+	int i;
+	i = rand() % 5 + 1;
+	Print_L(i);
+	system("cls");
+}
+
+void PrintDietH()
+{ //살빼는 식단
+	char buffer[MAX_LENGTH];
+	FILE* p_file = NULL;
+	int i;
+	i = rand() % 5 + 1;
+	Print_H(i);
+	system("cls");
+}
+
+void PrintDietS()
+{ //정상체중 식단
+	char buffer[MAX_LENGTH];
+	FILE* p_file = NULL;
+	int i;
+	i = rand() % 5 + 1;
+	Print_S(i);
+	system("cls");
+}
+
+int PrintDietM()
+{ //다이어트 종류 정보리스트 출력
+	char buffer[MAX_LENGTH];
+	system("cls");
+	FILE* p_file = NULL;
+	int dm;
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 6; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("                   1. 디톡스 다이어트", 60);
+	PrintMiddleline1("                   2. 원푸드 다이어트", 60);
+	PrintMiddleline1("                   3. 덴마크 다이어트", 60);
+	PrintMiddleline1("                   4. 간헐적 단식", 60);
+	PrintMiddleline1("                   5. 황제 다이어트.", 60);
+	PrintMiddleline1("                   6. 저인슐린 다이어트", 60);
+	PrintMiddleline1("                   7. 뒤로가기", 60);
+	PrintMiddleline1("              궁금한 다이어트 정보를 선택하세요 : ", 60);
+	for (i = 0; i < 8; i++) PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(75, 23);
+	scanf("%d", &dm);
+	return dm;
+}
