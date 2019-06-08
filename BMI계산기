@@ -1,0 +1,168 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#define BACK 9
+
+float CalcBMI(float h, float w);
+void PrintBMI1(float BMI);
+void CheckBMI(float bmi);
+void PrintBMI(float BMI);
+void FeMaleBMI();
+void MaleBMI();
+
+float CalcBMI(float h, float w)
+{
+	float bmi;
+	float h1;
+	h1 = h / 100;
+	bmi = w / (h1 * h1);
+	return bmi;
+}
+
+void PrintBMI1(float BMI) {
+	system("cls");
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	printf("\t\t\t│\t\t 당신의 BMI는 %.2f입니다!\t\t     │\n", BMI);
+	printf("\t\t\t│%-*s│\n", 60, "             당신의 비만도 계산을 완료하였습니다...");
+	printf("\t\t\t├");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┤\n");
+	PrintMiddleline("", 60);
+
+}
+
+void CheckBMI(float bmi)
+{
+	int i;
+	if (bmi > 18.5) {
+		if (bmi > 22.9) {
+			if (bmi > 24.9) {
+				PrintBMI1(bmi);
+				PrintMiddleline1("             당신은 비만입니다..", 60);
+				PrintMiddleline("", 60);
+				printf("\t\t\t└");
+				for (int i = 0; i < 60; i++) printf("─");
+				printf("┘");
+				Sleep(3000);
+				system("cls");
+				PrintDataHigh();
+
+			}
+			else {
+				PrintBMI1(bmi);
+				PrintMiddleline1("             당신은 과체중입니다.", 60);
+				PrintMiddleline("", 60);
+				printf("\t\t\t└");
+				for (int i = 0; i < 60; i++) printf("─");
+				printf("┘");
+				Sleep(3000);
+				system("cls");
+				PrintDataHigh();
+			}
+		}
+		else {
+			PrintBMI1(bmi);
+			PrintMiddleline1("             당신은 정상체중입니다!", 60);
+			PrintMiddleline("", 60);
+			printf("\t\t\t└");
+			for (int i = 0; i < 60; i++) printf("─");
+			printf("┘");
+			Sleep(3000);
+			system("cls");
+
+			PrintDatamiddle();
+		}
+	}
+	else {
+		PrintBMI1(bmi);
+		PrintMiddleline1("             당신은 저체중입니다.", 60);
+		PrintMiddleline("", 60);
+		printf("\t\t\t└");
+		for (int i = 0; i < 60; i++) printf("─");
+		printf("┘");
+		Sleep(3000);
+		system("cls");
+		PrintDataLow();
+
+	}
+}
+
+void PrintBMI(float BMI)
+{
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	printf("\t\t\t│\t\t 당신의 BMI는 %.2f입니다!\t\t     │\n", BMI);
+	printf("\t\t\t│%-*s│\n", 60, "             당신의 비만도를 계산하고 있습니다...");
+	printf("\t\t\t├");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┤\n");
+	PrintMiddleline("", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (int i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	Sleep(1500);
+	CheckBMI(BMI);
+
+}
+
+void FeMaleBMI()
+{
+	float h = 0, w = 0;
+	TitleBar("                '여성'을 선택하셨습니다.", 60);
+	Sleep(500);
+	system("cls");
+	Drawtable();
+	gotoxy(70, 14);
+	scanf("%f", &h);
+	gotoxy(70, 16);
+	scanf("%f", &w);
+	CursorView(0);
+	CalcBMI(h, w);
+	Sleep(1000);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다.**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다..**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다...**", 60);
+	Sleep(500);
+	system("cls");
+	PrintBMI(CalcBMI(h, w));
+}
+
+void MaleBMI()//표로 나타낼 예정
+{
+	float h = 0, w = 0;
+	TitleBar("                '남성'을 선택하셨습니다.", 60);
+	Sleep(500);
+	system("cls");
+	Drawtable();
+	gotoxy(70, 14);
+	scanf("%f", &h);
+	gotoxy(70, 16);
+	scanf("%f", &w);
+	CursorView(0);
+	CalcBMI(h, w);
+	Sleep(1000);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다.**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다..**", 60);
+	Sleep(500);
+	system("cls");
+	TitleBar("           ** 당신의 BMI를 계산하고 있습니다...**", 60);
+	Sleep(500);
+	system("cls");
+	PrintBMI(CalcBMI(h, w));
+}
