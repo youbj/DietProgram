@@ -1,0 +1,304 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#define MAX_LENGTH 100000
+#define COMMAND_SIZE 256
+#define BACK 9
+#define END 10
+
+void gotoxy(int x, int y);
+void CursorView(char show);
+void FeMaleBMI();
+void MaleBMI();
+float CalcBMI(float h, float w);
+void TitleBar(const char* ap_string, int a);
+void Drawtable();
+void PrintBMI(float BMI);
+void CheckBMI(float bmi);
+void PrintDataHigh();
+void PrintDatamiddle();
+void PrintDataLow();
+int Printmenu();
+int printDietM();
+void printDietS();
+void PrintDietH();
+void PrintDietL();
+int partial_exer_menu();
+int Print_partial_exer();
+void Print_exer_High();
+void Print_Exercise(int menu);
+void PrintBMI1(float BMI);
+void Print_aerobic_exer();
+void Print_First(int menu);
+void Print_L(int menu);
+void Print_H(int menu);
+void Print_S(int menu);
+void Print_M(int menu);
+void PrintDietTable();
+
+
+int main()
+{
+	CursorView(0);
+	
+	system("COLOR F0");
+	char gender;
+	char command[COMMAND_SIZE] = { '\0', };
+	int lines = 40;
+	int cols = 120;
+	sprintf(command, "mode con: lines=%d cols=%d", lines, cols);
+	system(command);
+	while (!kbhit())
+	{
+		Print_First(1);
+		Sleep(1000);
+		Print_First(2);
+		Sleep(1000);
+	}
+	getch();
+	system("cls");
+	CursorView(1);
+	while (1) {
+		TitleBar("             사용자의 성별을 입력해주세요[F/M] : ", 60);
+		gotoxy(76, 15);
+		scanf("%c", &gender);
+		if (gender == 'F')
+		{
+			system("cls");
+			FeMaleBMI();
+		}
+		else if (gender == 'M')
+		{
+			system("cls");
+			MaleBMI();
+		}
+		else {
+			TitleBar("          잘못된 입력입니다.다시 입력해 주세요.", 60);
+			Sleep(2000);
+			system("cls");
+			continue;
+		}
+	}
+}
+
+void PrintDataHigh()
+{
+diH:
+	int menu;
+	int mm;
+	while ((menu = Printmenu()) != END)
+	{
+		switch (menu)
+		{
+		case 1:
+			while (Print_partial_exer() != BACK);//부분별 운동
+			break;
+		case 2:
+			Print_aerobic_exer();//유산소 운동
+		case 3:
+		{
+		diM:
+			system("cls");
+			int rre;
+			PrintDietTable();
+			scanf("%d", &mm);
+			if (mm == 1)
+			{
+				system("cls");
+				rre = PrintDietM();//다이어트 정보를 출력하는 함수
+				if (rre == 7)
+				{
+					system("cls");
+					goto diM;
+				}
+				else
+				{
+					Print_M(rre);
+					system("cls");
+					break;
+				}
+			}
+			else if (mm == 2)
+			{
+				system("cls");
+				PrintDietH();
+				system("cls");
+				break;
+			}
+			else if (mm == 3)
+			{
+				system("cls");
+				goto diH;
+			}
+			else
+			{
+				system("cls");
+				TitleBar("        잘못된 입력입니다. 다시입력해주세요.", 60);
+				Sleep(1000);
+				system("cls");
+				goto diH;
+			}
+			break;
+		}
+		}
+	}
+}
+
+void PrintDatamiddle()
+{
+diS:
+	int menu;
+	while ((menu = Printmenu()) != END)
+	{
+		switch (menu)
+		{
+		case 1:
+			while (Print_partial_exer() != BACK);//부분별 운동
+			break;
+		case 2:
+			Print_aerobic_exer();//유산소 운동
+			break;
+		case 3:
+		{
+		diM:
+			system("cls");			
+			int mm;
+			int rre;
+			PrintDietTable();
+			scanf("%d", &mm);
+			if (mm == 1)
+			{
+				system("cls");
+				rre = PrintDietM();//다이어트 정보를 출력하는 함수
+				if (rre == 7)
+				{
+					system("cls");
+					goto diM;
+				}
+				else
+				{
+					Print_M(rre);
+					system("cls");
+
+					break;
+				}
+			}
+			else if (mm == 2)
+			{
+				system("cls");
+				PrintDietS();
+				system("cls");
+
+				break;
+			}
+			else if (mm == 3)
+			{
+				system("cls");
+				goto diS;
+			}
+			else
+			{
+				system("cls");
+				TitleBar("        잘못된 입력입니다. 다시입력해주세요.", 60);
+				Sleep(1000);
+				system("cls");
+				goto diS;
+			}
+			break;
+		}
+		}
+	}
+	system("cls");
+	exit(0);
+}
+
+void PrintDataLow()
+{
+diL:
+	int menu;
+	while ((menu = Printmenu()) != END)
+	{
+		switch (menu)
+		{
+		case 1:
+			while (Print_partial_exer() != BACK);
+			break;
+		case 2:
+			Print_aerobic_exer();
+			break;
+		case 3:
+		{
+		diM:
+			system("cls");
+			int mm;
+			int rre;
+			PrintDietTable();
+			scanf("%d", &mm);
+			if (mm == 1)
+			{
+				system("cls");
+				PrintDietM();
+				rre = PrintDietM();//다이어트 정보를 출력하는 함수
+				if (rre == 7)
+				{
+					goto diM;
+				}
+				else
+				{
+					Print_M(rre);
+					system("cls");
+					break;
+				}
+			}
+			else if (mm == 2)
+			{
+				system("cls");
+				PrintDietH();
+				system("cls");
+				break;
+			}
+			else if (mm == 3)
+			{
+				system("cls");
+				goto diL;
+			}
+			else
+			{
+				system("cls");
+				TitleBar("        잘못된 입력입니다. 다시입력해주세요.", 60);
+				Sleep(1000);
+				system("cls");
+				goto diL;
+			}
+			break;
+		}
+		}
+
+	}
+}
+
+
+int Printmenu()
+{ // 번호를 입력받는 것이아닌 커서를 이용하여
+	int menu, i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	PrintMiddleline("                     **할수있다! 다이어트!**", 60);
+	PrintMiddleline("", 60);
+	PrintMiddleline("                  1.부위별 운동보기", 60);
+	PrintMiddleline("                  2.유산소 운동보기", 60);
+	PrintMiddleline1("                  3.다이어트 식단 만들기", 60);
+	PrintMiddleline("                  4.뒤로가기", 60);
+	PrintMiddleline1("                  10.종료", 60);
+	PrintMiddleline("                  원하는 메뉴를 선택해주세요 : ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(73, 20);
+	scanf("%d", &menu);
+	system("cls");
+	return menu;
+}
