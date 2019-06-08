@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+
+#define MAX_LENGTH 100000
+#define COMMAND_SIZE 256
+
+void gotoxy(int x, int y);
+void CursorView(char show);
+void TitleBar(const char* ap_string, int a);
+void Drawtable();
+void PrintDietTable();
+
+void PrintMiddleline(const char* ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+void PrintMiddleline1(const char* ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+void Printtable1(const char* ap_string, int a)
+{
+	printf("\t\t\t│%-*s│\n", a, ap_string);
+}
+
+void CursorView(char show)//커서숨기기
+{
+	HANDLE hConsole;
+	CONSOLE_CURSOR_INFO ConsoleCursor;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	ConsoleCursor.bVisible = show;
+	ConsoleCursor.dwSize = 1;
+
+	SetConsoleCursorInfo(hConsole, &ConsoleCursor);
+}
+
+void gotoxy(int x, int y)
+{
+	COORD Pos = { x - 1, y - 1 };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+void TitleBar(const char* ap_string, int a)
+{
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < a; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 5; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1(ap_string, 60);
+	for (i = 0; i < 15; i++) PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+}
+
+void Drawtable()
+{
+	int i;
+
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 2; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("               ** 정보를 입력하여 주세요! **", 60);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┬"); }
+	}printf("┤\n");
+	Printtable1("     키를 입력해주세요(cm) :  │  ", 61);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┼"); }
+	}printf("┤\n");
+	Printtable1("     몸무게를 입력해주세요  : │  ", 61);
+	printf("\t\t\t├");
+	for (i = 0; i < 59; i++) {
+		printf("─"); if (i == 29) { printf("┴"); }
+	}printf("┤\n");
+	for (i = 0; i < 3; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+}
+
+void PrintDietTable() {
+	int i;
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	for (i = 0; i < 6; i++)    PrintMiddleline("", 60);
+	PrintMiddleline1("               1. 다이어트 정보 출력", 60);
+	PrintMiddleline1("               2. 다이어트 식단 출력", 60);
+	PrintMiddleline1("               3. 뒤로가기", 60);
+	PrintMiddleline1("              원하시는 메뉴를 선택하세요 :", 60);
+	for (i = 0; i < 12; i++) PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(69, 18);
+
+}
