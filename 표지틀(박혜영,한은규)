@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#include <conio.h>
+
+void Print_First(int menu)//첫화면 이미지 출력
+{
+	int num = 0;
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	if (menu == 1)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("첫화면1.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(40);
+	}
+	else if (menu == 2)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("첫화면2.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(40);
+	}
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+}
