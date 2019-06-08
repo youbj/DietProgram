@@ -1,0 +1,203 @@
+#include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#define BACK 9
+#define END 10
+
+int Print_partial_exer();
+int partial_exer_menu();
+void Print_exer_High();
+void Print_Exercise(int menu);
+
+int Print_partial_exer()
+{
+	int menu, i;
+	while (1)
+	{
+		menu = partial_exer_menu();
+		switch (menu)
+		{
+		case 0:
+		{
+			system("cls");
+			for (i = 1; i < 9; i++)
+				Print_Exercise(i);
+			break;
+		}
+		case 1:
+		{
+			system("cls");
+			Print_Exercise(1);
+			break;
+		}
+		case 2:
+		{
+			system("cls");
+			Print_Exercise(2);
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			Print_Exercise(3);
+			break;
+		}
+		case 4:
+		{
+			system("cls");
+			Print_Exercise(4);
+			break;
+		}
+		case 5:
+		{
+			system("cls");
+			Print_Exercise(5);
+			break;
+		}
+		case 6:
+		{
+			system("cls");
+			Print_Exercise(6);
+			break;
+		}
+		case 7:
+		{
+			system("cls");
+			Print_Exercise(7);
+			break;
+		}
+		case 8:
+		{
+			system("cls");
+			Print_Exercise(8);
+			break;
+		}
+		case 9:
+			return BACK;
+		case 10:
+			exit(0);
+		}
+	}
+}
+
+int partial_exer_menu()
+{
+	int i, menu;
+	system("cls");
+	printf("\n\n\n\n\n\n\n\n\t\t\t┌");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┐\n");
+	PrintMiddleline("", 60);
+	PrintMiddleline("       '먹고싶은걸 다먹지만 아주조금만 먹었어요' -설현- ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t├");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┤\n");
+	PrintMiddleline("               0. 전체", 60);
+	PrintMiddleline("               1. 팔 운동", 60);   //★★★★★★★★★ 추가
+	PrintMiddleline("               2. 어깨 운동", 60);
+	PrintMiddleline("               3. 가슴 운동", 60);
+	PrintMiddleline("               4. 등 운동", 60);
+	PrintMiddleline("               5. 복근 운동", 60);
+	PrintMiddleline("               6. 엉덩이 운동", 60);
+	PrintMiddleline("               7. 허벅지 운동", 60);
+	PrintMiddleline("               8. 종아리 운동", 60);
+	PrintMiddleline("               9. 뒤로가기", 60);
+	PrintMiddleline("               10. 종료", 60);
+	PrintMiddleline("               원하는 메뉴를 선택해주세요 : ", 60);
+	PrintMiddleline("", 60);
+	printf("\t\t\t└");
+	for (i = 0; i < 60; i++) printf("─");
+	printf("┘");
+	gotoxy(70, 25);
+	scanf("%d", &menu);
+	system("cls");
+	return menu;
+}
+
+void Print_aerobic_exer()
+{
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	hImage = (HBITMAP)LoadImage(NULL, TEXT("유산소운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	Sleep(3000);
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+	Sleep(3000);
+}
+
+void Print_Exercise(int menu)
+{
+	int num = 0;
+	//Get a console handle
+	HWND myconsole = GetConsoleWindow();
+	//Get a handle to device context
+	HDC mydc = GetDC(myconsole);
+
+	HBITMAP hImage, hOldBitmap;
+	HDC hMemDC = CreateCompatibleDC(mydc);
+	// 이미지 로드
+	if (menu == 1)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("팔운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 2)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("어깨운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 3)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("가슴운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 4)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("등운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 5)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("복근운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 6)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("엉덩이운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 7)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("허벅지운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	else if (menu == 8)
+	{
+		hImage = (HBITMAP)LoadImage(NULL, TEXT("종아리운동.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		Sleep(3000);
+	}
+	//    이미지 출력 부분
+	hOldBitmap = (HBITMAP)SelectObject(hMemDC, hImage);
+	BitBlt(mydc, 0, 0, 200 * 10, 200 * 20, hMemDC, 0, 0, SRCCOPY);
+	//각종 메모리 해제
+	SelectObject(hMemDC, hOldBitmap);
+	DeleteObject(hImage);
+	DeleteDC(hMemDC);
+
+	ReleaseDC(myconsole, mydc);
+	Sleep(3000);
+}
